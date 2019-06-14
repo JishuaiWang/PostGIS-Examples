@@ -10,13 +10,13 @@ create extension oracle_fdw;
 select * from pg_available_extensions;
  
 --创建访问oracle的连接
-create server oracle foreign data wrapper oracle_fdw options(dbserver '10.110.39.183:1521/orcl1');
+create server oracle foreign data wrapper oracle_fdw options(dbserver '10.110.XX.XX:1521/orcl1');
 
 --授予postgres用户访问权限
 grant usage on foreign server oracle to postgres;
 
 --创建到oracle的映射
-create user mapping for postgres server oracle options(user 'scgx_db',password 'scgx_2018');
+create user mapping for postgres server oracle options(user 'scgx_db',password 'xxxxxx');
 
 --创建需要访问的oracle中对应表的结构
 create foreign table "wyzx"."pg_gc_gsm"(
@@ -30,17 +30,4 @@ create foreign table "wyzx"."pg_gc_gsm"(
   "station_name" varchar(200),
   "longitude_antenna" varchar(50),
   "latitude_antenna" varchar(50),
-  "bsc" varchar(100),
-  "cover_type" varchar(100),
-  "cover_scene" varchar(100),
-  "frequency" varchar(100),
-  "bcch" float,
-  "height" float,
-  "angle_location" float,
-  "angle_mechanical" float,
-  "angle_electron" float,
-  "angle_antenna" float,
-  "network_type" varchar(50),
-  "important_scene" varchar(500),
-  "scene_name" varchar(500)
 ) server oracle options(schema 'SCGX_DB',table 'GC_GSM');
