@@ -1,3 +1,15 @@
+--测试
+drop table tbl_point;
+
+create table tbl_point(id serial8, poi point);
+
+insert into tbl_point select generate_series(1,1000000),point(trunc(100000*(0.5-random())), trunc(100000*(0.5-random())));  
+
+create index idx_tbl_point on tbl_point using gist(poi) with (buffering=on);
+
+select *,poi <-> point(1000,1000) dist from tbl_point where poi <-> point(1000,1000) < 100 order by poi <-> point(1000,1000) limit 10;
+
+--实例
 --向gc_2g中添加distance和cgi字段
 --计算每个点最近的几个点，可以是同一张表，也可是不同表
 CREATE OR REPLACE FUNCTION queryNearest() RETURNS int AS $idx$ DECLARE
